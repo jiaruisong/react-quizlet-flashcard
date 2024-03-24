@@ -144,8 +144,32 @@ function FlashcardArray({
       forwardRef.current.nextCard = nextCard;
       forwardRef.current.prevCard = prevCard;
       forwardRef.current.resetArray = resetArray;
+      forwardRef.current.goToCard = (index) => {
+        if (index >= 0 && index < cards.length) {
+          setIsOverFlow("hidden");
+          setTimeout(() => {
+            setIsOverFlow("");
+          }, 90); 
+  
+          setCardNumber(index);
+  
+          // Adjust cardsInDisplay for direct navigation
+          setCardsInDisplay(
+            index === 0
+              ? [cards.length - 1, 0, 1] // Consider cycle logic
+              : index === cards.length - 1
+              ? [index - 1, index, 0] // Consider cycle logic
+              : [index - 1, index, index + 1]
+          );
+  
+          onCardChange(cards[index].id, index);
+        } else {
+          console.error("Index out of bounds");
+        }
+      };
     }
-  });
+  }, [nextCard, prevCard, resetArray, cards, forwardRef, onCardChange, cycle, setIsOverFlow]);
+
 
   return (
     <div className="FlashcardArrayWrapper" style={FlashcardArrayStyle}>
