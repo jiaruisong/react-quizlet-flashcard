@@ -144,7 +144,7 @@ function FlashcardArray({
       forwardRef.current.nextCard = nextCard;
       forwardRef.current.prevCard = prevCard;
       forwardRef.current.resetArray = resetArray;
-      forwardRef.current.goToCard = (index) => {
+      forwardRef.current.goToCard = (index: number) => {
         if (index >= 0 && index < cards.length) {
           setIsOverFlow("hidden");
           setTimeout(() => {
